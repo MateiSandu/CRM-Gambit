@@ -20,6 +20,7 @@ export default class ChessBoard extends LightningElement {
             this.createBoardElement();
             this.createControlButtons();
             this.initializeChessBoard();
+
             this.isChessboardJsInitialized = true;
         } catch (error) {
             console.error('Error loading resources or initializing Chessboard:', error);
@@ -111,7 +112,9 @@ export default class ChessBoard extends LightningElement {
                 moveSpeed: 'slow',
                 snapbackSpeed: 500,
                 snapSpeed: 100,
-                onDragStart: this.onDragStart,
+                onDragMove: this.onDragMove,
+                onChange: this.onChange
+
             });
 
             console.log('Chessboard initialized successfully');
@@ -120,14 +123,10 @@ export default class ChessBoard extends LightningElement {
         }
     }
 
-    onDragStart (source, piece, position, orientation) {
-        console.log('Drag started:')
-        console.log('Source: ' + source)
-        console.log('Piece: ' + piece)
-        console.log('Position: ' + Chessboard.objToFen(position))
-        console.log('Orientation: ' + orientation)
-
-        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    }
-
+     onChange (oldPos, newPos) {
+            console.log('Position changed:')
+            console.log('Old position: ' + Chessboard.objToFen(oldPos))
+            console.log('New position: ' + Chessboard.objToFen(newPos))
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+     }
 }
