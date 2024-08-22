@@ -56,55 +56,56 @@ export default class ChessBoard extends LightningElement {
      */
     createBoardElement() {
         const boardContainer = this.template.querySelector('lightning-card');
-
+    
         if (boardContainer) {
+            // Create a wrapper for the board and buttons
+            const wrapper = document.createElement('div');
+            wrapper.style.textAlign = 'center'; // Center the content
+    
+            // Create the board element
             const boardElement = document.createElement('div');
             boardElement.id = 'board1';
             boardElement.style.width = '600px';
             boardElement.style.height = '600px';
             boardElement.style.margin = '20px auto';
             boardElement.style.border = '1px solid #000';
-            boardContainer.appendChild(boardElement);
+    
+            // Append board element to the wrapper
+            wrapper.appendChild(boardElement);
+            boardContainer.appendChild(wrapper);
         } else {
             console.error('Cannot find lightning-card container');
         }
     }
+    
+    
 
     /**
      * Creates and appends control buttons (Clear Board, Start Position, Flip Board) to the container.
      */
     createControlButtons() {
         const boardContainer = this.template.querySelector('lightning-card');
-
+    
         if (boardContainer) {
-            // Clear Board Button
-            const clearBoardBtn = document.createElement('button');
-            clearBoardBtn.id = 'clearBoardInstantBtn';
-            clearBoardBtn.innerText = 'Clear Board';
-            clearBoardBtn.style.margin = '10px';
-            clearBoardBtn.addEventListener('click', () => {
-                if (this.board1) {
-                    this.board1.clear(false);
-                    this.game.reset();
-                    this.updateTurnIndicator();
-                }
-            });
-            boardContainer.appendChild(clearBoardBtn);
+            // Create a container for the buttons
+            const buttonsContainer = document.createElement('div');
+            buttonsContainer.style.textAlign = 'center'; // Center the buttons
+            buttonsContainer.style.marginTop = '10px'; // Add space between the buttons and the board
 
-            // Start Position Button
-            const startPositionBtn = document.createElement('button');
-            startPositionBtn.id = 'startPositionBtn';
-            startPositionBtn.innerText = 'Start Position';
-            startPositionBtn.style.margin = '10px';
-            startPositionBtn.addEventListener('click', () => {
+            // Reset Button
+            const resetBtn = document.createElement('button');
+            resetBtn.id = 'resetBtn';
+            resetBtn.innerText = 'Reset';
+            resetBtn.style.margin = '10px';
+            resetBtn.addEventListener('click', () => {
                 if (this.board1) {
                     this.board1.start();
                     this.game.reset();
                     this.updateTurnIndicator();
                 }
             });
-            boardContainer.appendChild(startPositionBtn);
-
+            buttonsContainer.appendChild(resetBtn);
+    
             // Flip Board Button
             const flipBtn = document.createElement('button');
             flipBtn.id = 'flipBtn';
@@ -115,29 +116,45 @@ export default class ChessBoard extends LightningElement {
                     this.board1.flip();
                 }
             });
-            boardContainer.appendChild(flipBtn);
+            buttonsContainer.appendChild(flipBtn);
+    
+            // Append buttons container to the board container
+            boardContainer.appendChild(buttonsContainer);
         } else {
             console.error('Cannot find lightning-card container');
         }
     }
+    
 
     /**
      * Creates and appends the turn indicator element to the container.
      */
     createTurnIndicator() {
         const boardContainer = this.template.querySelector('lightning-card');
-
+    
         if (boardContainer) {
+            // Create a container for the turn indicator
+            const turnIndicatorContainer = document.createElement('div');
+            turnIndicatorContainer.style.textAlign = 'center'; // Center the text
+            turnIndicatorContainer.style.marginBottom = '10px'; // Add space between the indicator and board
+    
+            // Create the turn indicator element
             const turnIndicator = document.createElement('div');
             turnIndicator.id = 'turnIndicator';
-            turnIndicator.style.margin = '10px';
-            turnIndicator.style.fontSize = '18px';
-            turnIndicator.innerText = "White's turn";
-            boardContainer.appendChild(turnIndicator);
+            turnIndicator.style.fontSize = '22px';
+            turnIndicator.style.fontWeight = 'bold'; // Make the text bold
+            turnIndicator.innerText = "White's turn"; // Default turn message
+    
+            turnIndicatorContainer.appendChild(turnIndicator);
+    
+            // Insert turn indicator above the board and buttons wrapper
+            boardContainer.insertBefore(turnIndicatorContainer, boardContainer.firstChild);
         } else {
             console.error('Cannot find lightning-card container');
         }
     }
+    
+    
 
     /**
      * Initializes the chessboard and game instances.
