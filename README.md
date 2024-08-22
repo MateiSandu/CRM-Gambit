@@ -11,3 +11,10 @@ FUTURE
 * Game analysis
 * can einstein be in any way leveraged for this?
 * PGN and FEN readers
+
+
+
+
+DOCUMENTATION BELOW
+
+

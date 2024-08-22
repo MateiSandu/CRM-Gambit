@@ -83,6 +83,18 @@ export default class ChessBoard extends LightningElement {
                 }
             });
             boardContainer.appendChild(startPositionBtn);
+
+            // Create Flip Board Button
+            const flipBtn = document.createElement('button');
+            flipBtn.id = 'flipBtn';
+            flipBtn.innerText = 'Flip Board';
+            flipBtn.style.margin = '10px';
+            flipBtn.addEventListener('click', () => {
+                if (this.board1) {
+                    this.board1.flip();
+                }
+            });
+            boardContainer.appendChild(flipBtn);
         } else {
             console.error('Cannot find lightning-card container');
         }
