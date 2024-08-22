@@ -1,18 +1,12 @@
-# Salesforce DX Project: Next Steps
+High hopes but let's see ;)
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+TODO
+* Allow only legal moves - this comes with a lot more things to be done, such as an indicator to whose turn it is, seeing what moves are legal upon click, removing the move if it's legal, etc
+* Fix the issue where the the piece disappears upon clicking it
+* Bot creation - unsure about how it will be done yet - currently thinking about Lichess API 
 
-## How Do You Plan to Deploy Your Changes?
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
-
-## Configure Your Salesforce DX Project
-
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
-
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+FUTURE
+* Game analysis
+* can einstein be in any way leveraged for this?
+* PGN and FEN readers
