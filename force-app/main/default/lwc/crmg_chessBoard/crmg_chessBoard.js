@@ -192,7 +192,7 @@ export default class ChessBoard extends LightningElement {
             // Create a container for the turn indicator
             const turnIndicatorContainer = document.createElement('div');
             turnIndicatorContainer.style.textAlign = 'center'; // Center the text
-            turnIndicatorContainer.style.marginBottom = '10px'; // Add space between the indicator and board
+            turnIndicatorContainer.style.marginBottom = '15px'; // Add space between the indicator and board
     
             // Create the turn indicator element
             const turnIndicator = document.createElement('div');
