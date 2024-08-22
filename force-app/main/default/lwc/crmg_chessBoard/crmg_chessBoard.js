@@ -80,7 +80,7 @@ export default class ChessBoard extends LightningElement {
             // Clear Board Button
             const clearBoardBtn = document.createElement('button');
             clearBoardBtn.id = 'clearBoardInstantBtn';
-            clearBoardBtn.innerText = 'Clear Board Instant';
+            clearBoardBtn.innerText = 'Clear Board';
             clearBoardBtn.style.margin = '10px';
             clearBoardBtn.addEventListener('click', () => {
                 if (this.board1) {
