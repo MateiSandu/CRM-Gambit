@@ -7,8 +7,8 @@ High hopes but let's see ;)
 TODO
 * Allow only legal moves - this comes with a lot more things to be done, such as an indicator to whose turn it is, seeing what moves are legal upon click, removing the move if it's not legal, etc    ---DONE
 * Style improvement  ---DONE(ish)
-* Fix the issue where the the piece disappears upon clicking it
-* Undo last move button
+* Fix the issue where the the piece disappears upon clicking and holding it
+* Undo-redo last move button
 * Move history
 * Bot creation - unsure about how it will be done yet - currently thinking about Lichess API 
 
@@ -17,7 +17,7 @@ TODO
 1. Game object
 2. Move object
 3. Player object
-4. Position object (to do )
+4. Position object
 (This would allow me to save and load games hopefully)
 
 
@@ -26,6 +26,7 @@ TODO
 * Implement Gamification - once I have some bots, I can do Achievments and Badges
 * Maybe Chatter?
 * Time control
+* See what pieces you've captured and what pieces you lost
 
 
 
