@@ -4,11 +4,14 @@ import JQUERY from '@salesforce/resourceUrl/jquery';
 import CHESSBOARD_JS from '@salesforce/resourceUrl/chessboardjs';
 import CHESSBOARD_CSS from '@salesforce/resourceUrl/chessboardcss';
 import CHESS_PIECE_IMAGES from '@salesforce/resourceUrl/chesspieceimages';
+import CHESS_JS from '@salesforce/resourceUrl/chessjs'
 
 export default class ChessBoard extends LightningElement {
     board1;
+    game; // Instance of chess.js
     isChessboardJsInitialized = false;
     jqueryJsLoaded = false;
+    chessJsLoaded = false;
 
     async renderedCallback() {
         if (this.isChessboardJsInitialized) {
@@ -32,7 +35,9 @@ export default class ChessBoard extends LightningElement {
             await loadScript(this, JQUERY);
             this.jqueryJsLoaded = true;
             await loadScript(this, CHESSBOARD_JS);
+            await loadScript(this, CHESS_JS); // Load chess.js
             await loadStyle(this, CHESSBOARD_CSS);
+            this.chessJsLoaded = true;
         } catch (error) {
             console.error('Error loading resources', error);
             throw error;
@@ -68,6 +73,8 @@ export default class ChessBoard extends LightningElement {
             clearBoardBtn.addEventListener('click', () => {
                 if (this.board1) {
                     this.board1.clear(false);
+                    this.game.reset(); // Reset chess game state
+                    this.updateStatus(); // Update status display
                 }
             });
             boardContainer.appendChild(clearBoardBtn);
@@ -80,6 +87,8 @@ export default class ChessBoard extends LightningElement {
             startPositionBtn.addEventListener('click', () => {
                 if (this.board1) {
                     this.board1.start();
+                    this.game.reset(); // Reset chess game state
+                    this.updateStatus(); // Update status display
                 }
             });
             boardContainer.appendChild(startPositionBtn);
@@ -101,8 +110,8 @@ export default class ChessBoard extends LightningElement {
     }
 
     initializeChessBoard() {
-        if (!this.jqueryJsLoaded || typeof Chessboard === 'undefined') {
-            console.error('jQuery or Chessboard.js is not available globally');
+        if (!this.jqueryJsLoaded || !this.chessJsLoaded || typeof Chessboard === 'undefined') {
+            console.error('jQuery, Chessboard.js or chess.js is not available globally');
             return;
         }
 
@@ -115,6 +124,10 @@ export default class ChessBoard extends LightningElement {
                 return;
             }
 
+            // Initialize chess.js
+            this.game = new Chess();
+
+            // Initialize Chessboard.js
             this.board1 = Chessboard(boardElement, {
                 position: 'start',
                 pieceTheme: pieceThemeUrl,
@@ -124,9 +137,9 @@ export default class ChessBoard extends LightningElement {
                 moveSpeed: 'slow',
                 snapbackSpeed: 500,
                 snapSpeed: 100,
-                onDragMove: this.onDragMove,
-                onChange: this.onChange
-
+                onDragStart: this.onDragStart.bind(this),
+                onDrop: this.onDrop.bind(this),
+                onSnapEnd: this.onSnapEnd.bind(this),
             });
 
             console.log('Chessboard initialized successfully');
@@ -135,10 +148,55 @@ export default class ChessBoard extends LightningElement {
         }
     }
 
-     onChange (oldPos, newPos) {
-            console.log('Position changed:')
-            console.log('Old position: ' + Chessboard.objToFen(oldPos))
-            console.log('New position: ' + Chessboard.objToFen(newPos))
-            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-     }
+    onDragStart(source, piece, position, orientation) {
+        // Prevent piece pick up if game is over
+        if (this.game.game_over()) return false;
+
+        // Only allow the current side's pieces to be picked up
+        if ((this.game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+            (this.game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+            return false;
+        }
+    }
+
+    onDrop(source, target) {
+        // Make the move with chess.js
+        const move = this.game.move({
+            from: source,
+            to: target,
+            promotion: 'q' // Always promote to a queen for simplicity
+        });
+
+        // If move is illegal, snap back
+        if (move === null) return 'snapback';
+
+        this.board1.position(this.game.fen()); // Update board position
+        this.updateStatus(); // Update status display
+    }
+
+    onSnapEnd() {
+        // Update board position after move
+        this.board1.position(this.game.fen());
+    }
+
+    updateStatus() {
+        let status = '';
+        const moveColor = this.game.turn() === 'b' ? 'Black' : 'White';
+
+        if (this.game.in_checkmate()) {
+            status = `Game over, ${moveColor} is in checkmate.`;
+        } else if (this.game.in_draw()) {
+            status = 'Game over, drawn position';
+        } else {
+            status = `${moveColor} to move`;
+            if (this.game.in_check()) {
+                status += `, ${moveColor} is in check`;
+            }
+        }
+
+        // Update status elements (if any)
+        this.template.querySelector('#status').innerText = status;
+        this.template.querySelector('#fen').innerText = this.game.fen();
+        this.template.querySelector('#pgn').innerText = this.game.pgn();
+    }
 }
