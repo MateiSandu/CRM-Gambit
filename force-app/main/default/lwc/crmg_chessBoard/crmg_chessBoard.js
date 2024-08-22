@@ -78,7 +78,6 @@ export default class ChessBoard extends LightningElement {
         }
     }
     
-    
 
     /**
      * Creates and appends control buttons (Clear Board, Start Position, Flip Board) to the container.
@@ -90,13 +89,33 @@ export default class ChessBoard extends LightningElement {
             // Create a container for the buttons
             const buttonsContainer = document.createElement('div');
             buttonsContainer.style.textAlign = 'center'; // Center the buttons
-            buttonsContainer.style.marginTop = '10px'; // Add space between the buttons and the board
-
+            buttonsContainer.style.marginTop = '20px'; // Add space between the buttons and the board
+    
+            // Button base styles
+            const buttonStyle = `
+                padding: 10px 20px;
+                font-size: 14px;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 5px;
+                transition: background-color 0.3s, color 0.3s, transform 0.2s;
+                color: #333; /* Text color */
+                outline: none;
+            `;
+    
+            // Common button styles for reset and flip buttons
+            const commonButtonStyle = `
+                ${buttonStyle}
+                background-color: #f0f0f0; /* Light grey background */
+            `;
+    
             // Reset Button
             const resetBtn = document.createElement('button');
             resetBtn.id = 'resetBtn';
             resetBtn.innerText = 'Reset';
-            resetBtn.style.margin = '10px';
+            resetBtn.style.cssText = commonButtonStyle;
             resetBtn.addEventListener('click', () => {
                 if (this.board1) {
                     this.board1.start();
@@ -104,18 +123,56 @@ export default class ChessBoard extends LightningElement {
                     this.updateTurnIndicator();
                 }
             });
+    
+            // Add hover effect and animation for Reset Button
+            resetBtn.addEventListener('mouseover', () => {
+                resetBtn.style.backgroundColor = '#e0e0e0'; // Slightly darker grey
+                resetBtn.style.transform = 'scale(1.05)'; // Slightly larger
+            });
+            resetBtn.addEventListener('mouseout', () => {
+                resetBtn.style.backgroundColor = '#f0f0f0'; // Return to original color
+                resetBtn.style.transform = 'scale(1)'; // Return to original size
+            });
+    
+            // Add click effect for Reset Button
+            resetBtn.addEventListener('mousedown', () => {
+                resetBtn.style.transform = 'scale(0.95)'; // Slightly smaller on click
+            });
+            resetBtn.addEventListener('mouseup', () => {
+                resetBtn.style.transform = 'scale(1)'; // Return to original size
+            });
+    
             buttonsContainer.appendChild(resetBtn);
     
             // Flip Board Button
             const flipBtn = document.createElement('button');
             flipBtn.id = 'flipBtn';
             flipBtn.innerText = 'Flip Board';
-            flipBtn.style.margin = '10px';
+            flipBtn.style.cssText = commonButtonStyle;
             flipBtn.addEventListener('click', () => {
                 if (this.board1) {
                     this.board1.flip();
                 }
             });
+    
+            // Add hover effect and animation for Flip Button
+            flipBtn.addEventListener('mouseover', () => {
+                flipBtn.style.backgroundColor = '#e0e0e0'; // Slightly darker grey
+                flipBtn.style.transform = 'scale(1.05)'; // Slightly larger
+            });
+            flipBtn.addEventListener('mouseout', () => {
+                flipBtn.style.backgroundColor = '#f0f0f0'; // Return to original color
+                flipBtn.style.transform = 'scale(1)'; // Return to original size
+            });
+    
+            // Add click effect for Flip Button
+            flipBtn.addEventListener('mousedown', () => {
+                flipBtn.style.transform = 'scale(0.95)'; // Slightly smaller on click
+            });
+            flipBtn.addEventListener('mouseup', () => {
+                flipBtn.style.transform = 'scale(1)'; // Return to original size
+            });
+    
             buttonsContainer.appendChild(flipBtn);
     
             // Append buttons container to the board container
@@ -125,7 +182,6 @@ export default class ChessBoard extends LightningElement {
         }
     }
     
-
     /**
      * Creates and appends the turn indicator element to the container.
      */
