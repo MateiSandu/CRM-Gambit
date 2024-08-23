@@ -13,6 +13,7 @@ export default class ChessBoard extends LightningElement {
     jqueryJsLoaded = false; // Flag to track jQuery loading
     chessJsLoaded = false; // Flag to track Chess.js loading
     @track currentPosition;
+    @track nextTurnFrom;
 
     /**
      * Lifecycle hook called when the component is rendered.
@@ -322,7 +323,7 @@ export default class ChessBoard extends LightningElement {
                 onMouseoutSquare: this.onMouseoutSquare.bind(this),
                 onMouseoverSquare: this.onMouseoverSquare.bind(this),
                 onSnapEnd: this.onSnapEnd.bind(this),
-                onMoveEnd: this.onMoveEnd
+                onMoveEnd: this.onMoveEnd.bind(this)
             });
 
             console.log('Chessboard initialized successfully');
@@ -436,12 +437,15 @@ export default class ChessBoard extends LightningElement {
     }
 
     onMoveEnd(oldPos, newPos) {
-        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
         this.currentPosition = Chessboard.objToFen(newPos);
-        console.log('current position is: ', this.currentPosition);
-        console.log('whose turn it is?')
-        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-      }
+        this.nextTurnFrom = this.game.turn() === 'b' ? 'Black to turn next' : 'White to turn next';
+        console.log('Next Turn From: ', this.nextTurnFrom)
+        console.log('Current position is: ', this.currentPosition);
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+        // NOW I NEED TO CONSTRUCT THE POSITION I WILL FEED STOCKFISH, because FEN is incomplete. I currently have only the position, not whose turn it is.
+    }
+    
 
     /**
      * Updates the turn indicator element to reflect the current turn.
@@ -451,6 +455,7 @@ export default class ChessBoard extends LightningElement {
         if (turnIndicator) {
             const moveColor = this.game.turn() === 'b' ? 'Black' : 'White';
             turnIndicator.innerText = `${moveColor}'s turn`;
+            this.nextTurnFrom = turnIndicator.innerText;
         } else {
             console.error('Turn indicator element not found');
         }
