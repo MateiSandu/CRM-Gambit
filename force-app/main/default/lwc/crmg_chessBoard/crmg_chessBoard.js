@@ -68,7 +68,6 @@ export default class ChessBoard extends LightningElement {
             boardElement.style.width = '600px';
             boardElement.style.height = '600px';
             boardElement.style.margin = '20px auto';
-            boardElement.style.border = '1px solid #000';
     
             // Append board element to the wrapper
             wrapper.appendChild(boardElement);
