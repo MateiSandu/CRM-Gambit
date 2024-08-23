@@ -1,4 +1,4 @@
-<b>DISCLAIMER: This is not intended to represent all the best practices for Salesforce. I was experimenting with combining chess and Salesforce for fun, and I was also exploring how to create HTML elements with JavaScript. As a result, the approach might not be the most effective, nor very clean!!</b>
+<b>DISCLAIMER: This is not intended to represent all the best practices for Salesforce. I was experimenting with combining chess and Salesforce for fun, and I was also exploring how to create HTML elements directly from JavaScript. As a result, the approach might not be the most effective, nor very clean!!</b>
 
 (Couldn't have done it without the help of my dear friend chatGPT)
 
@@ -10,6 +10,7 @@ TODO
 * Fix the issue where the the piece disappears upon clicking and holding it
 * Undo-redo last move button
 * Move history
+* Message to show when game is over - saying who won 
 * Bot creation - unsure about how it will be done yet - currently thinking about Lichess API 
 
 
@@ -27,6 +28,7 @@ TODO
 * Maybe Chatter?
 * Time control
 * See what pieces you've captured and what pieces you lost
+* See if mobile view can get an improvement
 
 
 

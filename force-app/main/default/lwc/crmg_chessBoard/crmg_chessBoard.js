@@ -12,6 +12,7 @@ export default class ChessBoard extends LightningElement {
     isChessboardJsInitialized = false; // Flag to track initialization
     jqueryJsLoaded = false; // Flag to track jQuery loading
     chessJsLoaded = false; // Flag to track Chess.js loading
+    @track currentPosition;
 
     /**
      * Lifecycle hook called when the component is rendered.
@@ -24,9 +25,10 @@ export default class ChessBoard extends LightningElement {
 
         try {
             await this.loadResources();
+            this.createTurnIndicator();
             this.createBoardElement();
             this.createControlButtons();
-            this.createTurnIndicator();
+            // this.createTurnIndicator();
             this.initializeChessBoard();
             this.isChessboardJsInitialized = true;
         } catch (error) {
@@ -65,8 +67,8 @@ export default class ChessBoard extends LightningElement {
             // Create the board element
             const boardElement = document.createElement('div');
             boardElement.id = 'board1';
-            boardElement.style.width = '600px';
-            boardElement.style.height = '600px';
+            boardElement.style.width = '500px';
+            boardElement.style.height = '500px';
             boardElement.style.margin = '20px auto';
     
             // Append board element to the wrapper
@@ -173,6 +175,65 @@ export default class ChessBoard extends LightningElement {
             });
     
             buttonsContainer.appendChild(flipBtn);
+
+            // AI Toggle Button
+            const aiToggleBtn = document.createElement('button');
+            aiToggleBtn.id = 'aiToggleBtn';
+            aiToggleBtn.innerText = 'Toggle AI';
+            aiToggleBtn.style.cssText = commonButtonStyle;
+            aiToggleBtn.addEventListener('click', () => {
+                this.isAiEnabled = !this.isAiEnabled;
+                aiToggleBtn.innerText = this.isAiEnabled ? 'Artificial Intelligence On' : 'Artificial Intelligence Off';
+            });
+
+            // Add hover effect and animation for AI Toggle 
+            aiToggleBtn.addEventListener('mouseover', () => {
+                aiToggleBtn.style.backgroundColor = '#e0e0e0'; // Slightly darker grey
+                aiToggleBtn.style.transform = 'scale(1.05)'; // Slightly larger
+            });
+            aiToggleBtn.addEventListener('mouseout', () => {
+                aiToggleBtn.style.backgroundColor = '#f0f0f0'; // Return to original color
+                aiToggleBtn.style.transform = 'scale(1)'; // Return to original size
+            });
+    
+            // Add click effect for Flip Button
+            aiToggleBtn.addEventListener('mousedown', () => {
+                aiToggleBtn.style.transform = 'scale(0.95)'; // Slightly smaller on click
+            });
+            aiToggleBtn.addEventListener('mouseup', () => {
+                aiToggleBtn.style.transform = 'scale(1)'; // Return to original size
+            });
+
+            buttonsContainer.appendChild(aiToggleBtn);
+
+            // Save Game Button
+            const saveGameBtn = document.createElement('button');
+            saveGameBtn.id = 'saveGameBtn';
+            saveGameBtn.innerText = 'Save Game';
+            saveGameBtn.style.cssText = commonButtonStyle;
+            saveGameBtn.addEventListener('click', () => {
+                console.log('placeholder');
+            });
+
+            // Add hover effect and animation for AI Toggle 
+            saveGameBtn.addEventListener('mouseover', () => {
+                saveGameBtn.style.backgroundColor = '#e0e0e0'; // Slightly darker grey
+                saveGameBtn.style.transform = 'scale(1.05)'; // Slightly larger
+            });
+            saveGameBtn.addEventListener('mouseout', () => {
+                saveGameBtn.style.backgroundColor = '#f0f0f0'; // Return to original color
+                saveGameBtn.style.transform = 'scale(1)'; // Return to original size
+            });
+    
+            // Add click effect for Flip Button
+            saveGameBtn.addEventListener('mousedown', () => {
+                saveGameBtn.style.transform = 'scale(0.95)'; // Slightly smaller on click
+            });
+            saveGameBtn.addEventListener('mouseup', () => {
+                saveGameBtn.style.transform = 'scale(1)'; // Return to original size
+            });
+
+            buttonsContainer.appendChild(saveGameBtn);
     
             // Append buttons container to the board container
             boardContainer.appendChild(buttonsContainer);
@@ -188,26 +249,42 @@ export default class ChessBoard extends LightningElement {
         const boardContainer = this.template.querySelector('lightning-card');
     
         if (boardContainer) {
-            // Create a container for the turn indicator
-            const turnIndicatorContainer = document.createElement('div');
-            turnIndicatorContainer.style.textAlign = 'center'; // Center the text
-            turnIndicatorContainer.style.marginBottom = '15px'; // Add space between the indicator and board
+            // Create a container for the turn indicator and timers
+            const indicatorContainer = document.createElement('div');
+            indicatorContainer.style.textAlign = 'center';
+            indicatorContainer.style.marginBottom = '15px';
     
-            // Create the turn indicator element
+            // Create the turn indicator
             const turnIndicator = document.createElement('div');
             turnIndicator.id = 'turnIndicator';
             turnIndicator.style.fontSize = '22px';
-            turnIndicator.style.fontWeight = 'bold'; // Make the text bold
-            turnIndicator.innerText = "White's turn"; // Default turn message
+            turnIndicator.style.fontWeight = 'bold';
+            turnIndicator.innerText = "White's turn";
     
-            turnIndicatorContainer.appendChild(turnIndicator);
+            // // Create timer elements
+            // const timerWhite = document.createElement('div');
+            // timerWhite.id = 'timerWhite';
+            // timerWhite.style.fontSize = '18px';
+            // timerWhite.style.marginTop = '10px';
+            // timerWhite.innerText = "White Time: 00:00";
     
-            // Insert turn indicator above the board and buttons wrapper
-            boardContainer.insertBefore(turnIndicatorContainer, boardContainer.firstChild);
+            // const timerBlack = document.createElement('div');
+            // timerBlack.id = 'timerBlack';
+            // timerBlack.style.fontSize = '18px';
+            // timerBlack.style.marginTop = '10px';
+            // timerBlack.innerText = "Black Time: 00:00";
+    
+            indicatorContainer.appendChild(turnIndicator);
+            // indicatorContainer.appendChild(timerWhite);
+            // indicatorContainer.appendChild(timerBlack);
+    
+            // Insert indicator container above the board and buttons wrapper
+            boardContainer.insertBefore(indicatorContainer, boardContainer.firstChild);
         } else {
             console.error('Cannot find lightning-card container');
         }
     }
+    
     
     
 
@@ -245,6 +322,7 @@ export default class ChessBoard extends LightningElement {
                 onMouseoutSquare: this.onMouseoutSquare.bind(this),
                 onMouseoverSquare: this.onMouseoverSquare.bind(this),
                 onSnapEnd: this.onSnapEnd.bind(this),
+                onMoveEnd: this.onMoveEnd
             });
 
             console.log('Chessboard initialized successfully');
@@ -357,6 +435,14 @@ export default class ChessBoard extends LightningElement {
         this.board1.position(this.game.fen());
     }
 
+    onMoveEnd(oldPos, newPos) {
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        this.currentPosition = Chessboard.objToFen(newPos);
+        console.log('current position is: ', this.currentPosition);
+        console.log('whose turn it is?')
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+      }
+
     /**
      * Updates the turn indicator element to reflect the current turn.
      */
@@ -369,4 +455,6 @@ export default class ChessBoard extends LightningElement {
             console.error('Turn indicator element not found');
         }
     }
+
+
 }
