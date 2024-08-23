@@ -1,4 +1,4 @@
-<b>DISCLAIMER: This isn’t exactly a masterclass in Salesforce wizardry. I’m just having a bit of fun combining chess with Salesforce and playing around with JavaScript to create HTML elements, instead of the usual approach. The method might not be the pinnacle of elegance or efficiency, but hey, where’s the fun without a bit of experimentation? 
+<b>DISCLAIMER: This isn’t exactly a masterclass in Salesforce wizardry. I’m just having a bit of fun combining chess with Salesforce and playing around with JavaScript to create HTML elements, so definetely not the usual approach. The method might not be the pinnacle of elegance or efficiency, but hey, where’s the fun without a bit of experimentation? 
 
 Huge shoutout to my trusty sidekick, ChatGPT!</b>
 
