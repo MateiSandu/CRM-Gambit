@@ -1,7 +1,9 @@
-<b>DISCLAIMER: This isn’t exactly a masterclass in Salesforce wizardry. I’m just having a bit of fun combining chess with Salesforce and playing around with JavaScript to create HTML elements on the fly. The method might not be the pinnacle of elegance or efficiency, but hey, where’s the fun without a bit of experimentation? Huge shoutout to my trusty sidekick, ChatGPT, for being my chess-y sidekick in this adventure!</b>
+<b>DISCLAIMER: This isn’t exactly a masterclass in Salesforce wizardry. I’m just having a bit of fun combining chess with Salesforce and playing around with JavaScript to create HTML elements, instead of the usual approach. The method might not be the pinnacle of elegance or efficiency, but hey, where’s the fun without a bit of experimentation? 
 
-<i>Here’s what’s on my chess-to-do list:</i>
+Huge shoutout to my trusty sidekick, ChatGPT!</b>
 
+Here’s what’s on my chess-to-do list:
+<i>
 * Ensure Only Legal Moves - This involves a whole lot more, like indicators for whose turn it is, highlighting legal moves on click, and not allowing illegal moves. (Yep, that's done—well, mostly!)
 
 * Style Improvements - Still in the "done-ish" category, because why stop at decent when you can aim for "almost stylish"?
@@ -31,3 +33,4 @@
 * Captured and Lost Pieces Display - So you can reminisce about the pieces you’ve captured and those you’ve lost, like a chess museum.
 
 * Mobile View Enhancements - Making sure your chess skills look as good on mobile as they do on desktop.*
+</i>
