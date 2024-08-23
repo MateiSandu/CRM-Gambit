@@ -1,35 +1,33 @@
-<b>DISCLAIMER: This is not intended to represent all the best practices for Salesforce. I was experimenting with combining chess and Salesforce for fun, and I was also exploring how to create HTML elements directly from JavaScript. As a result, the approach might not be the most effective, nor very clean!!</b>
+<b>DISCLAIMER: This isn’t exactly a masterclass in Salesforce wizardry. I’m just having a bit of fun combining chess with Salesforce and playing around with JavaScript to create HTML elements on the fly. The method might not be the pinnacle of elegance or efficiency, but hey, where’s the fun without a bit of experimentation? Huge shoutout to my trusty sidekick, ChatGPT, for being my chess-y sidekick in this adventure!</b>
 
-(Couldn't have done it without the help of my dear friend chatGPT)
+<i>Here’s what’s on my chess-to-do list:</i>
 
-High hopes but let's see ;)
+* Ensure Only Legal Moves - This involves a whole lot more, like indicators for whose turn it is, highlighting legal moves on click, and not allowing illegal moves. (Yep, that's done—well, mostly!)
 
-TODO
-* Allow only legal moves - this comes with a lot more things to be done, such as an indicator to whose turn it is, seeing what moves are legal upon click, removing the move if it's not legal, etc    ---DONE
-* Style improvement  ---DONE(ish)
-* Fix the issue where the the piece disappears upon clicking and holding it
-* Undo-redo last move button
-* Move history
-* Message to show when game is over - saying who won 
-* Bot creation - unsure about how it will be done yet - currently thinking about Lichess API 
+* Style Improvements - Still in the "done-ish" category, because why stop at decent when you can aim for "almost stylish"?
 
+* Fix the Disappearing Piece Trick - That moment when you click and hold a piece, and it just vanishes. Kind of like a magic trick gone wrong.
 
-* I was thinking about creating 4 Salesforce objects: 
-1. Game object
-2. Move object
-3. Player object
-4. Position object
-(This would allow me to save and load games hopefully)
+* Undo-Redo Button - Because we all make mistakes, and being able to undo your epic blunders is a true lifesaver.
 
+* Move History - Keep track of every move so you can analyze how you ended up in that checkmate mess.
 
-* Create Analytics - (reports/dashboards)
-* Game analysis
-* Implement Gamification - once I have some bots, I can do Achievments and Badges
-* Maybe Chatter?
-* Time control
-* See what pieces you've captured and what pieces you lost
-* See if mobile view can get an improvement
+* Game Over Messaging - Display a grand proclamation of victory or defeat, because chess isn’t just about winning; it’s about the drama!  
 
+* Create a Game Object - So you can save and load games like a pro. Because who wants to lose their hard-fought progress?
 
+* Stockfish Integration - Because nobody beats Stockfish, it will play 1 calculated move and 1 random move.
 
+* Analytics - Dive deep into the numbers with Salesforce reports and dashboards. Because analyzing is the new winning.
 
+* Game Analysis - Break down every move like a sports commentator analyzing the big game.
+
+* Gamification - Achievements and badges are coming! Earn your bragging rights as you crush your chess goals.
+
+* Maybe Chatter? - Who knows? A bit of chess banter in Chatter might just be the next big thing.
+
+* Time Control - Because sometimes a chess game needs a bit of pressure, and no, it's not just about taking your time.
+
+* Captured and Lost Pieces Display - So you can reminisce about the pieces you’ve captured and those you’ve lost, like a chess museum.
+
+* Mobile View Enhancements - Making sure your chess skills look as good on mobile as they do on desktop.*
